@@ -6,7 +6,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -26,10 +29,23 @@ public class PassportController {
         return new ResponseEntity<>(passportDAO.findById(id).get(), HttpStatus.OK);
     }
 
+//    @PostMapping("")
+//    @ResponseStatus(HttpStatus.ACCEPTED)
+//    public void savepassport(@RequestBody Passport passport) {
+//        passportDAO.save(passport);
+//    }
+
+
     @PostMapping("")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void savepassport(@RequestBody Passport passport) {
+    public void savePassport(@RequestParam String series, @RequestParam MultipartFile file) throws IOException {
+        String originalFilename = file.getOriginalFilename();//homer.jpg
+
+        File dest = new File(System.getProperty("user.home") + File.separator +"someImages" + File.separator + originalFilename );
+        file.transferTo(dest);
+        Passport passport = new Passport(series, originalFilename);
         passportDAO.save(passport);
+
     }
 
     @DeleteMapping("{id}")
@@ -44,9 +60,6 @@ public class PassportController {
         Passport save = passportDAO.save(passport);
         return new ResponseEntity<>(save, HttpStatus.ACCEPTED);
     }
-
-
-
 
 
 }
