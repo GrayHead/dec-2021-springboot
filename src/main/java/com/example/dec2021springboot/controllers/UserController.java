@@ -58,4 +58,10 @@ public class UserController {
     }
 
 
+    @GetMapping("/activateAccount/{id}")
+    public ResponseEntity<String> activateAccount(@PathVariable int id) {
+        return userService.activateUserAccount(id);
+
+    }
+
 }

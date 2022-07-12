@@ -26,9 +26,11 @@ public class User {
     private Passport passport;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_card", joinColumns = @JoinColumn(name = "id_user"),
-            inverseJoinColumns = @JoinColumn(name = "id_card"))
+    @JoinTable(name = "user_card", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_card"))
     private List<Card> cards;
+
+    private boolean isActivated = false;
+    private String email;
 
 
 }
