@@ -35,6 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("admin").password("{noop}admin").roles("ADMIN")
                 .and()
                 .withUser("manager").password("{noop}manager").roles("MANAGER");
+
+
     }
 
 
