@@ -30,7 +30,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private CustomerDAO customerDAO;
+
+    private UserDetailsService userDetailsService;
 
 
     @Bean
@@ -40,18 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-        auth.userDetailsService(username -> {
-
-            Customer customer = customerDAO.findByLogin(username);
-            User user =
-                    new User(username, customer.getPassword(),
-                            customer.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.name())).collect(Collectors.toList())
-
-                    );
-
-            return user;
-        });
+        auth.userDetailsService(userDetailsService);
 
     }
 
